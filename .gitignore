@@ -67,7 +67,7 @@
 /src/tagui_py/tagui_py.log
 /src/tagui_py/tagui_py_windows.log
 
-# exclude local files for sikuli integration 
+# exclude local files for sikuli integration
 /src/tagui.sikuli/tagui_sikuli.in
 /src/tagui.sikuli/tagui_sikuli.out
 /src/tagui.sikuli/tagui_sikuli.txt
@@ -79,3 +79,5 @@
 
 # exclude local files for catboost integration
 /src/catboost/*
+
+node_modules
