@@ -51,6 +51,10 @@ export class CLIUtil {
     });
   }
 
+  static mkDir(dir:string) : void {
+    shell.mkdir(dir);
+  }
+
   // static setBaselinePath(){}
 
   static execute () {
