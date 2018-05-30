@@ -1,6 +1,6 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import parse from 'csv-parse/lib/sync';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 
 export class CSVUtil {
@@ -12,6 +12,5 @@ export class CSVUtil {
 
   static transpose (data:string[][]) :string[][] {
     return _.zip.apply(_, data);
-    // return math.transpose(data);
   }
 }

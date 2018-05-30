@@ -1,4 +1,4 @@
-import * as download from 'download';
+import  download from 'download';
 import * as shell from 'shelljs'
 
 export class CLIUtil {
@@ -52,6 +52,16 @@ export class CLIUtil {
   }
 
   // static setBaselinePath(){}
+
+  static execute () {
+    //1. if sleep mode, pause 3s
+    //2. parse the file and output to log file
+    //3. parse R , python , sikuli
+    //4. start chrome
+    // 4.1. setup width height
+    // 4.2. config for headless
+    // 4.3  ????
+  }
 }
 
 export class TaguiParams {
