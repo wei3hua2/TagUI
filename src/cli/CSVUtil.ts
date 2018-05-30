@@ -1,0 +1,17 @@
+import * as fs from 'fs';
+import parse from 'csv-parse/lib/sync';
+import * as _ from 'lodash';
+
+
+export class CSVUtil {
+
+  static readCsvFile(filePath:string) :string[][] {
+    let data:string = fs.readFileSync(filePath,'utf8');
+    return parse(data);
+  }
+
+  static transpose (data:string[][]) :string[][] {
+    return _.zip.apply(_, data);
+    // return math.transpose(data);
+  }
+}

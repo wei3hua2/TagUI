@@ -2,6 +2,7 @@ import * as c from 'chai';
 import * as m from 'mocha';
 
 import {TaguiParams, CLIUtil} from '../src/cli/CLIUtil';
+import {CSVUtil} from '../src/cli/CSVUtil';
 
 let COMMAND_WITHOUT_PARAMS = "node ./src/tagui.js";
 let COMMAND_WITH_ONLY_FILENAME = "node ./src/tagui.js filename";
@@ -98,5 +99,22 @@ m.describe('Operation' , () => {
       "tagui_chrome.log"];
 
     CLIUtil.removeFiles(filePaths);
+  })
+
+  m.it('read csv file', () => {
+    let data:string[][] = CSVUtil.readCsvFile('./src/samples/6_datatables/6A_datatables.csv');
+    console.log(data);
+
+    c.expect(data).to.be.deep.equal(
+            [ [ '6A_GETURL', '#1', '#2', '#3' ],
+              [ 'page_no', '1', '2', '3' ] ]);
+  })
+
+  m.it('transpose csv data', () => {
+    let data = [ [ '6A_GETURL', '#1', '#2', '#3' ],[ 'page_no', '1', '2', '3' ] ];
+
+    let result = CSVUtil.transpose(data);
+
+    c.expect(result).to.be.deep.equal([ [ '6A_GETURL', 'page_no' ],[ '#1', '1' ],[ '#2', '2' ],[ '#3', '3' ] ]);
   })
 })
