@@ -1,9 +1,10 @@
 import * as fs from 'fs';
 import _ from 'lodash';
+import {Deferred} from "ts-deferred";
 import {CLIUtil, TaguiParams} from './cli/CLIUtil';
 import {TaguiCoreEngine} from "./plugins/core-engine";
 //
-// import * from "./plugins/chrome/engine";
+import {ChromeEngine} from "./plugins/chrome/engine";
 // import * from "./plugins/python/engine";
 // import * from "./plugins/r/engine";
 // import * from "./plugins/sikuli/engine";
@@ -11,6 +12,14 @@ import {TaguiCoreEngine} from "./plugins/core-engine";
 // let chrome_command = "google-chrome";
 // let initial_dir = "pwd"
 
+import { ANTLRInputStream, CommonTokenStream } from 'antlr4ts';
+
+import { ParseTreeWalker } from "antlr4ts/tree/ParseTreeWalker";
+
+import {INTENTSParser} from './intents/basic/INTENTSParser';
+import {INTENTSLexer} from './intents/basic/INTENTSLexer';
+
+import {IntentsMainListener} from './plugins/IntentsBasicListener';
 
 async function start () {
   // console.log( CLIUtil.getHeaderContent() );
@@ -20,13 +29,23 @@ async function start () {
 
     let tParams:TaguiParams = TaguiParams.parseProcessParam( process.argv );
 
-    let engines = await getAllEngines();
+    let scriptLines:string[] = tParams.getFileContent();
 
-    engines.forEach(e => e.setup());
+    // console.log(scriptLines);
 
-    engines.forEach(e => e.execute());
+    let engines = await getAllAvailableEngines();
+    // console.log(engines);
+    // engines.forEach(e => e.setup());
+    //
 
-    engines.forEach(e => e.teardown());
+    for(let i =0; i < scriptLines.length;i++){
+      console.log('-- '+scriptLines[i]+' --');
+      let result = await execScriptLine(scriptLines[i], engines[0]);
+      console.log('result : '+result);
+    }
+
+    //
+    // engines.forEach(e => e.teardown());
 
     // ******************** EXECUTION ************************
 
@@ -50,16 +69,18 @@ function generateDataset () {
   //   then echo "ERROR - automation aborted due to above" | tee -a "$1".log; tagui_error_code=1; break; fi
 }
 
-async function getAllEngines (){
+async function getAllAvailableEngines (){
   let engines:TaguiCoreEngine[] = [];
-  let folders = readPluginFolders();
+  // let folders = readPluginFolders();
 
-  for (var val in folders) {
-    let EngineObj = await import(`./plugins/${folders[val]}/engine`);
-    let Engine = Object.values(EngineObj)[0];
+  // for (var val in folders) {
+  //   let EngineObj = await import(`./plugins/${folders[val]}/engine`);
+  //   let Engine = Object.values(EngineObj)[0];
+  //
+  //   engines.push( new Engine );
+  // }
 
-    engines.push( new Engine );
-  }
+  engines.push(new ChromeEngine);
 
   return engines;
 }
@@ -69,15 +90,21 @@ function readPluginFolders () : string[] {
   return _.filter(folders, f => !f.includes('.') && f !== 'core');
 }
 
-function execute () {
 
-  sleepIfNecessary(); //check flag and is it the first item
 
-  parseDSLFile();
+function execScriptLine(line, runner):Promise<any> {
+  let inputStream = new ANTLRInputStream(line);
+  let tokenStream = new CommonTokenStream( new INTENTSLexer(inputStream) );
+  let parser = new INTENTSParser(tokenStream);
+
+  let tree = parser.all();
+  let d = new Deferred<any>();
+
+  let intentListener = new IntentsMainListener(runner,d);
+
+  ParseTreeWalker.DEFAULT.walk(intentListener, tree);
+
+  return d.promise;
 }
-
-function sleepIfNecessary(){}
-function parseDSLFile(){}
-
 
 start();

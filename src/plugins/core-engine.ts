@@ -4,6 +4,6 @@ export abstract class TaguiCoreEngine {
   constructor(){}
 
   abstract setup() : void;
-  abstract execute(): void;
+  abstract execute(): any;
   abstract teardown(): void;
 }

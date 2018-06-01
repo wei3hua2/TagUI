@@ -10,10 +10,11 @@
      "es2017","es2015","dom","es6"
     ],
     "types":["node"],
-    "target": "es5",
+    "target": "es2015",
     "module": "commonjs",
     "declaration": true,
-    "strict": true,
-    "esModuleInterop": true
+    "strict": false,
+    "esModuleInterop": true,
+    "experimentalDecorators":true
   }
 }

@@ -1,5 +1,6 @@
 import  download from 'download';
-import * as shell from 'shelljs'
+import * as shell from 'shelljs';
+import fs from 'fs';
 
 export class CLIUtil {
   static getHeaderContent () :string {
@@ -25,6 +26,7 @@ export class CLIUtil {
   }
 
   //TODO: include csv download when error
+
   static downloadOnlineResource (fileUrl:string) : Promise<string> {
 
     let filename = fileUrl.substring( fileUrl.lastIndexOf('/')+1 );
@@ -113,6 +115,10 @@ export class TaguiParams {
     params.tagui_web_browser = TaguiParams.deriveBrowser(argvLs);
 
     return params;
+  }
+
+  getFileContent () :string[]{
+    return fs.readFileSync(this.filename,'utf8').split('\n');
   }
 
   private static deriveBrowser (argvLs:string[]) : string{
