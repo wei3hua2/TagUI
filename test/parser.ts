@@ -7,7 +7,8 @@ import * as m from 'mocha';
 import {TaguiParser} from '../src/parser/main';
 
 import {CasperRunner} from '../src/parser/casper/runner';
-import {ChromeEngine} from '../src/parser/chrome/engine';
+
+import {ChromeEngine} from '../src/plugins/chrome/engine';
 
 
 m.before(() => {
@@ -66,5 +67,15 @@ m.describe('Chrome', () => {
     let runner = new ChromeEngine();
 
     return runner.launch().should.eventually.have.exist;
+  }).timeout(0);
+
+  m.it('test chrome socket', (done) => {
+    let runner = new ChromeEngine();
+
+    runner.launch().then((d) => {
+      done();
+    });
+
+    // return runner.launch().should.eventually.have.exist;
   }).timeout(0);
 })

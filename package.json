@@ -15,9 +15,9 @@
   },
   "scripts": {
     "watch": "tsc -w",
-    "start": "node ./src/tagui.js",
+    "start": "node ./src/rps.js",
     "test": "mocha -r ts-node/register test/**.ts",
-    "antlr4ts": "antlr4ts src/intents/basic/INTENTS.g4"
+    "antlr4ts": "antlr4ts src/plugins/lang/basic/INTENTS.g4"
   },
   "bugs": {
     "url": "https://github.com/kelaberetiv/TagUI/issues"
@@ -29,9 +29,11 @@
     "casperjs": "^1.1.4",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
+    "chrome-remote-interface": "^0.25.6",
     "commander": "^2.15.1",
     "csv-parse": "^2.4.0",
     "download": "^7.0.0",
+    "inquirer": "^5.2.0",
     "lodash": "^4.17.10",
     "phantomjs-prebuilt": "^2.1.16",
     "request": "^2.87.0",
@@ -46,6 +48,7 @@
     "@types/chai-as-promised": "^7.1.0",
     "@types/commander": "^2.12.2",
     "@types/download": "^6.2.2",
+    "@types/inquirer": "0.0.41",
     "@types/lodash": "^4.14.109",
     "@types/mocha": "^5.2.0",
     "@types/request": "^2.47.0",

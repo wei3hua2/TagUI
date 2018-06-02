@@ -1,8 +1,8 @@
 import { ParserRuleContext } from "antlr4ts/ParserRuleContext";
 import {Deferred} from "ts-deferred";
 
-import {INTENTSListener} from '../intents/basic/INTENTSListener';
-import { ExpandContext, UrlContext, LaunchContext } from '../intents/basic/INTENTSParser';
+import {INTENTSListener} from './lang/basic/INTENTSListener';
+import { ExpandContext, UrlContext, LaunchContext } from './lang/basic/INTENTSParser';
 
 import {TaguiCoreEngine} from './core-engine';
 
