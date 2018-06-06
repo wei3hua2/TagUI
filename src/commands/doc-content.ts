@@ -13,4 +13,11 @@ let RUN_HELP = `Run Help`;
 let REPL_DESC = `Run Repl Description`;
 let REPL_HELP = `Run Repl`;
 
-export {RUN_HELP, RUN_DESC, REPL_HELP, REPL_DESC};
+let ENGINES_DESC = `Get Engine List`;
+let ENGINES_HELP = `Get Engine`;
+
+let KEYWORDS_DESC = `Get Keywords List`;
+let KEYWORDS_HELP = `Get Keywords`;
+
+export {RUN_HELP, RUN_DESC, REPL_HELP, REPL_DESC, ENGINES_HELP, ENGINES_DESC,
+KEYWORDS_DESC,KEYWORDS_HELP};

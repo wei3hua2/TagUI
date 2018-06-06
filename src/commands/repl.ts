@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
-import {ChromeEngine} from "../plugins/engines/chrome/engine";
-import {EngineUtil} from '../utils/EngineUtil';
+import {ChromeEngine} from "../engines/chrome/engine";
+import {ParserUtil} from '../utils/ParserUtil';
 
 export class ReplCommand {
 
@@ -15,8 +15,9 @@ export class ReplCommand {
 
   execute() {
     inquirer.prompt(this.qns).then((ans) => {
-      console.log(ans);
-      EngineUtil.execScriptLine(ans['line'], this.engine).then((d) => this.execute());
+      ParserUtil.execLine(ans['line'])
+        .then((d) => this.execute())
+        .catch((err) => {console.error(err);this.execute();} )
     });
   }
 

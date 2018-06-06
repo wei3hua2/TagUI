@@ -1,10 +1,22 @@
-import _ from 'lodash';
 import fs from 'fs';
+import _ from 'lodash';
+
 import {TaguiCoreEngine} from '../engines/core-engine';
 
-export class EngineUtil {
+export class EnginesCommand {
 
-  static async getEngineList() {
+  constructor() {
+  }
+
+  getDefaultEngine() {
+
+  }
+
+  getAvailableEngine() :string[] {
+    return this.readPluginFolders();
+  }
+
+  async getEngineList() {
       let engines:TaguiCoreEngine[] = [];
       let folders = this.readPluginFolders();
 
@@ -18,16 +30,8 @@ export class EngineUtil {
       return engines;
   }
 
-  static async getEngine(engine:string){
-    let EngineObj = await import(`../engines/${engine}/engine`);
-    let Engine = Object.values(EngineObj)[0];
-
-    return new Engine();
-  }
-
-  private static readPluginFolders () : string[] {
+  private readPluginFolders () : string[] {
     let folders = fs.readdirSync('./src/engines');
     return _.filter(folders, f => !f.includes('.') && f !== 'core');
   }
-
 }
